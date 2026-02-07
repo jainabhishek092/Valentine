@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alligator ❤️ Goose</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #3a1c71, #d76d77, #ffaf7b);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(12px);
+      padding: 32px 26px 36px;
+      border-radius: 22px;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+      animation: fadeIn 1.5s ease;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    h1 { font-size: 2.2rem; margin-bottom: 8px; }
+    p { font-size: 1.05rem; line-height: 1.6; }
+
+    .heart {
+      font-size: 3rem;
+      animation: pulse 1.2s infinite;
+      margin: 12px 0 18px;
+    }
+
+    .buttons {
+      margin: 26px auto 10px;
+      width: 240px;
+      height: 56px;
+      position: relative;
+    }
+
+    button {
+      width: 110px;
+      height: 46px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      background: #ffffff;
+      color: #d6336c;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+    }
+
+    .yes-btn {
+      position: absolute;
+      left: 0;
+      top: 5px;
+      z-index: 2;
+    }
+
+    /* YES after No disappears */
+    .yes-btn.centered {
+      left: 50%;
+      transform: translateX(-50%) scale(1.15);
+    }
+
+    .no-btn {
+      position: absolute;   /* initial */
+      right: 0;
+      top: 5px;
+      z-index: 2;
+    }
+
+    .gallery {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 90px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .share {
+      margin-top: 22px;
+      display: inline-block;
+      text-decoration: none;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      padding: 11px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+    }
+
+    #yesMessage {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      z-index: 5;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      border-radius: 22px;
+      padding: 20px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.18); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card" id="card">
+
+    <div id="yesMessage">
+      <div style="font-size:2.1rem;font-weight:800;">Yaaaay!! She said YES 😘💖</div>
+      <div>LOVE YOU GOOSE🐊🦢</div>
+    </div>
+
+    <h1>Hey Goose 🦢</h1>
+    <div class="heart">❤️</div>
+
+    <p>
+      From <strong>Alligator</strong> 🐊 to <strong>Goose</strong> 🦢 —<br>
+      Every moment with you feels like a memory my heart❤️ was waiting to make.
+    </p>
+
+    <p><strong>Will you be my Valentine? 💌</strong></p>
+
+    <div class="buttons">
+      <button class="yes-btn" id="yesBtn" onclick="yesClicked()">Yes 💕</button>
+      <button class="no-btn" id="noBtn" onmouseover="moveNo()">No 🙈</button>
+    </div>
+
+    <div class="gallery">
+  <img src="images/AJ_ind.jpg" alt="Memory 1">
+  <img src="images/MJ_ind.jpg" alt="Memory 2">
+  <img src="images/Vizan_couple1.jpg" alt="Memory 3">
+  <img src="images/Vizan_couple2.jpg" alt="Memory 4">
+  <img src="images/SL_couple1.jpg" alt="Memory 5">
+  <img src="images/Yala_couple.jpg" alt="Memory 6">
+</div>
+
+
+    <a class="share" href="https://wa.me/" target="_blank">
+      Share on WhatsApp 💬
+    </a>
+  </div>
+
+  <script>
+    let hoverCount = 0;
+    let detached = false;
+
+    function moveNo() {
+      const noBtn = document.getElementById('noBtn');
+      const card = document.getElementById('card');
+      const cardRect = card.getBoundingClientRect();
+
+      hoverCount++;
+
+      // Detach ONLY once, preserving position
+      if (!detached) {
+        const rect = noBtn.getBoundingClientRect();
+        noBtn.style.position = 'fixed';
+        noBtn.style.left = rect.left + 'px';
+        noBtn.style.top = rect.top + 'px';
+        detached = true;
+      }
+
+      // Disappear AFTER 5th hover
+      if (hoverCount >= 5) {
+        noBtn.style.opacity = '0';
+        noBtn.style.pointerEvents = 'none';
+        document.getElementById('yesBtn').classList.add('centered');
+        return;
+      }
+
+      // Move anywhere except overlapping the card
+      let x, y, safe = false;
+
+      while (!safe) {
+        x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+        const overlap =
+          x < cardRect.right &&
+          x + noBtn.offsetWidth > cardRect.left &&
+          y < cardRect.bottom &&
+          y + noBtn.offsetHeight > cardRect.top;
+
+        if (!overlap) safe = true;
+      }
+
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    }
+
+    function yesClicked() {
+      launchConfetti();
+      createHeartRain();
+      document.getElementById('yesMessage').style.display = 'flex';
+    }
+
+    function launchConfetti() {
+      const end = Date.now() + 1200;
+      (function frame() {
+        for (let i = 0; i < 6; i++) {
+          const confetti = document.createElement('div');
+          confetti.textContent = '🎉';
+          confetti.style.position = 'fixed';
+          confetti.style.left = Math.random() * window.innerWidth + 'px';
+          confetti.style.top = '-20px';
+          confetti.style.fontSize = '20px';
+          confetti.style.animation = 'fall 1.5s linear forwards';
+          document.body.appendChild(confetti);
+          setTimeout(() => confetti.remove(), 1500);
+        }
+        if (Date.now() < end) requestAnimationFrame(frame);
+      })();
+    }
+
+    function createHeartRain() {
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement('div');
+        heart.textContent = '❤️';
+        heart.style.position = 'fixed';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.top = '-20px';
+        heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+        heart.style.animation = 'fall 2.5s linear forwards';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 2500);
+      }
+    }
+  </script>
+</body>
+</html>
